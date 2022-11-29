@@ -82,6 +82,29 @@ var Worker = /** @class */ (function () {
             });
         });
     }; /* End addContact(). */
+    /****************************************************     Add feature      ***************************************
+     *  Update a new contact.
+     * @param  inID      The id number to be updated.
+     * @param  inContact The contact information to update.
+     * @return           A promise that eventually resolves to an IContact object.
+     */
+    Worker.prototype.updateContact = function (inID, inContact) {
+        var _this = this;
+        // public updateContact(inContact: IContact): Promise<IContact> {
+        console.log("Contacts.Worker.updateContact()", inContact);
+        return new Promise(function (inResolve, inReject) {
+            _this.db.update({ _id: inID }, { $set: inContact }, {}, function (inError) {
+                if (inError) {
+                    console.log("Contacts.Worker.updateContact(): Error", inError);
+                    inReject(inError);
+                }
+                else {
+                    console.log("Contacts.Worker.updateContact(): Ok", inID);
+                    inResolve(inID);
+                }
+            });
+        });
+    }; /* End updateContact(). */
     /**
      * Delete a contact.
      *

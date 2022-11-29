@@ -19,12 +19,13 @@ const app: Express = express();
 // Handle JSON in request bodies.
 app.use(express.json());
 
+//Server:1.provide RESTful endpoints; 2.serve client code to a browser
 
-// Serve the client.
+// Serve the client.built-in middleware serving static resources(in client)
 app.use("/", express.static(path.join(__dirname, "../../client/dist")));
 
 
-// Enable CORS so that we can call the API even from anywhere.
+// Enable CORS交互源共享 so that we can call the API even from anywhere.
 app.use(function(inRequest: Request, inResponse: Response, inNext: NextFunction) {
   inResponse.header("Access-Control-Allow-Origin", "*");
   inResponse.header("Access-Control-Allow-Methods", "GET,POST,DELETE,OPTIONS");
@@ -153,7 +154,7 @@ app.post("/contacts",
     try {
       const contactsWorker: Contacts.Worker = new Contacts.Worker();
       const contact: IContact = await contactsWorker.addContact(inRequest.body);
-      console.log("POST /contacts: Ok", contact);
+      console.log("PUT /contacts: Ok", contact);
       inResponse.json(contact);
     } catch (inError) {
       console.log("POST /contacts: Error", inError);
@@ -161,6 +162,23 @@ app.post("/contacts",
     }
   }
 );
+
+
+/******************************                   feature added                ******************************/
+// update a contact
+app.put('/contacts/:id',
+    async (inRequest: Request, inResponse: Response) => {
+    console.log("UPDATE /contacts", inRequest.body);
+    try {
+        const contactsWorker: Contacts.Worker = new Contacts.Worker();
+        await contactsWorker.updateContact(inRequest.params.inID, inRequest.body)
+        console.log("Contact updated");
+        inResponse.status(201).send(`Contact with id: ${inRequest.params.id} updated`)
+    } catch (inError) {
+        console.log(inError);
+        inResponse.send("error")
+    }
+})
 
 
 // Delete a contact.

@@ -37,7 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
+        while (_) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -75,9 +75,10 @@ var Contacts = __importStar(require("./Contacts"));
 var app = (0, express_1.default)();
 // Handle JSON in request bodies.
 app.use(express_1.default.json());
-// Serve the client.
+//Server:1.provide RESTful endpoints; 2.serve client code to a browser
+// Serve the client.built-in middleware serving static resources(in client)
 app.use("/", express_1.default.static(path_1.default.join(__dirname, "../../client/dist")));
-// Enable CORS so that we can call the API even from anywhere.
+// Enable CORS交互源共享 so that we can call the API even from anywhere.
 app.use(function (inRequest, inResponse, inNext) {
     inResponse.header("Access-Control-Allow-Origin", "*");
     inResponse.header("Access-Control-Allow-Methods", "GET,POST,DELETE,OPTIONS");
@@ -263,7 +264,7 @@ app.post("/contacts", function (inRequest, inResponse) { return __awaiter(void 0
                 return [4 /*yield*/, contactsWorker.addContact(inRequest.body)];
             case 2:
                 contact = _a.sent();
-                console.log("POST /contacts: Ok", contact);
+                console.log("PUT /contacts: Ok", contact);
                 inResponse.json(contact);
                 return [3 /*break*/, 4];
             case 3:
@@ -275,9 +276,36 @@ app.post("/contacts", function (inRequest, inResponse) { return __awaiter(void 0
         }
     });
 }); });
+/******************************                   feature added                ******************************/
+// update a contact
+app.put('/contacts/:id', function (inRequest, inResponse) { return __awaiter(void 0, void 0, void 0, function () {
+    var contactsWorker, inError_8;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                console.log("UPDATE /contacts", inRequest.body);
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                contactsWorker = new Contacts.Worker();
+                return [4 /*yield*/, contactsWorker.updateContact(inRequest.params.inID, inRequest.body)];
+            case 2:
+                _a.sent();
+                console.log("Contact updated");
+                inResponse.status(201).send("Contact with id: ".concat(inRequest.params.id, " updated"));
+                return [3 /*break*/, 4];
+            case 3:
+                inError_8 = _a.sent();
+                console.log(inError_8);
+                inResponse.send("error");
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); });
 // Delete a contact.
 app.delete("/contacts/:id", function (inRequest, inResponse) { return __awaiter(void 0, void 0, void 0, function () {
-    var contactsWorker, inError_8;
+    var contactsWorker, inError_9;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -293,8 +321,8 @@ app.delete("/contacts/:id", function (inRequest, inResponse) { return __awaiter(
                 inResponse.send("ok");
                 return [3 /*break*/, 4];
             case 3:
-                inError_8 = _a.sent();
-                console.log(inError_8);
+                inError_9 = _a.sent();
+                console.log(inError_9);
                 inResponse.send("error");
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];

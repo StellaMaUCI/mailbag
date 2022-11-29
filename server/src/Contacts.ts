@@ -7,7 +7,7 @@ const Datastore = require("nedb");
 
 
 // Define interface to describe a contact.  Note that we'll only have an _id field when retrieving or adding, so
-// it has to be optional.
+// it has to be optional.the client won’t supply it. Instead, NeDB will be populating that for us
 export interface IContact {
   _id?: number,
   name: string,
@@ -89,6 +89,36 @@ export class Worker {
     });
 
   } /* End addContact(). */
+
+
+
+  /****************************************************     Add feature      ***************************************
+   *  Update a new contact.
+   * @param  inID      The id number to be updated.
+   * @param  inContact The contact information to update.
+   * @return           A promise that eventually resolves to an IContact object.
+   */
+  public updateContact(inID: string, inContact: IContact): Promise<string> {
+  // public updateContact(inContact: IContact): Promise<IContact> {
+    console.log("Contacts.Worker.updateContact()", inContact);
+
+    return new Promise((inResolve, inReject) => {
+      this.db.update(
+          {_id: inID}, {$set: inContact},{ },
+          (inError: Error | null) => {
+            if (inError) {
+              console.log("Contacts.Worker.updateContact(): Error", inError);
+              inReject(inError);
+            } else {
+              console.log("Contacts.Worker.updateContact(): Ok", inID);
+              inResolve(inID);
+            }
+          }
+      );
+    });
+
+} /* End updateContact(). */
+
 
 
   /**
