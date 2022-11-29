@@ -28,6 +28,7 @@ export class Worker {
   } /* End listContacts(). */
 
 
+
   /**
    * Add a contact to the server.
    *
@@ -42,6 +43,23 @@ export class Worker {
     return response.data;
 
   } /* End addContact(). */
+
+
+
+  /**********************                        Add feature                    ***********************
+   * Update a contact to the server.
+   * @param  inID The contact id to be updated
+   * @param  inContact The contact information to update.
+   * @return           The inContact object updated.
+   */
+  public async updateContacts(inID, inContact: IContact): Promise<IContact> {
+
+    console.log("Contacts.Worker.updateContacts()");
+
+    const response: AxiosResponse = await axios.put(`${config.serverAddress}/contacts${inID}`, inContact);
+    return response.data;
+
+  } /* End updateContacts(). */
 
 
   /**
