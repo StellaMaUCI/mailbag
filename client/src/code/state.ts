@@ -9,6 +9,7 @@ import * as Contacts from "./Contacts";
 import { config } from "./config";
 import * as IMAP from "./IMAP";
 import * as SMTP from "./SMTP";
+import {IContact} from "./Contacts";
 
 
 // The single instance of state.
@@ -200,6 +201,21 @@ export function createState(inParentComponent: React.Component): any {
       }.bind(inParentComponent), /* End addContactToList(). */
 
 
+
+      /************************************ add feature ***************************************
+       * Update a contact to the list of contacts.
+       * @param inID A contact descriptor object.
+       * @param inContact A contact descriptor object.
+       */
+      updateContactToList : function(inID: Contacts.IContact, inContact: Contacts.IContact): void {
+
+        console.log("state.addContactToList()", inID, inContact);
+
+        this.setState(prevState => ({ contacts : [ ...prevState.contacts, inID, inContact ] }));
+
+      }.bind(inParentComponent), /* End updateContactToList(). */
+
+
       /**
        * Add a message to the list of messages in the current mailbox.
        *
@@ -288,6 +304,29 @@ export function createState(inParentComponent: React.Component): any {
         this.setState(() => ({ [inEvent.target.id] : inEvent.target.value }));
 
       }.bind(inParentComponent), /* End fieldChangeHandler(). */
+
+      /******************************     Add feature    *************************
+       * Update contact.
+       */
+      updateContact : async function (inID, inContact: IContact): Promise<void> {
+        console.log("state.updateContact()", this.state.contactID, this.state.contactName, this.state.contactEmail);
+
+        // Copy list.
+        const cl = this.state.contacts.slice(0);
+        // Save to server.
+        this.state.showHidePleaseWait(true);
+        const contactsWorker: Contacts.Worker = new Contacts.Worker();
+        const contact: Contacts.IContact =
+            await contactsWorker.updateContacts(this.state.contactID, inContact);
+        this.state.showHidePleaseWait(false);
+
+        // Update from list.
+        cl.updateContactToList(this.state.contactID, contact)
+
+        // Update state.
+        this.setState(() => ({ contacts : cl, contactID : null, contactName : "", contactEmail : "" }));
+      }.bind(inParentComponent), /* End updateContact(). */
+
 
 
       /**

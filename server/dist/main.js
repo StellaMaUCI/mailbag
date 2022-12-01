@@ -278,7 +278,7 @@ app.post("/contacts", function (inRequest, inResponse) { return __awaiter(void 0
 }); });
 /******************************                   feature added                ******************************/
 // update a contact
-app.put('/contacts/:id', function (inRequest, inResponse) { return __awaiter(void 0, void 0, void 0, function () {
+app.get('/contacts/id', function (inRequest, inResponse) { return __awaiter(void 0, void 0, void 0, function () {
     var contactsWorker, inError_8;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -288,9 +288,13 @@ app.put('/contacts/:id', function (inRequest, inResponse) { return __awaiter(voi
             case 1:
                 _a.trys.push([1, 3, , 4]);
                 contactsWorker = new Contacts.Worker();
-                return [4 /*yield*/, contactsWorker.updateContact(inRequest.params.inID, inRequest.body)];
+                // await contactsWorker.updateContact(inRequest.params.inID, inRequest.body)
+                return [4 /*yield*/, contactsWorker.updateContact("g8qTwzCg90sIyDFC", {
+                        name: 'webster', email: 'mary@gmail.com'
+                    })]; //test hardcode
             case 2:
-                _a.sent();
+                // await contactsWorker.updateContact(inRequest.params.inID, inRequest.body)
+                _a.sent(); //test hardcode
                 console.log("Contact updated");
                 inResponse.status(201).send("Contact with id: ".concat(inRequest.params.id, " updated"));
                 return [3 /*break*/, 4];

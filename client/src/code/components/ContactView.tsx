@@ -29,6 +29,14 @@ const ContactView = ({ state }): JSX.Element => (
         Save
       </Button>
     }
+
+    { state.currentView === "contactUpdate" &&
+      <Button variant="contained" color="primary" size="small" style={{ marginTop:10 }}
+        onClick={ state.updateContact }>
+        Update
+      </Button>
+    }
+
     { state.currentView === "contact" &&
       <Button variant="contained" color="primary" size="small" style={{ marginTop:10, marginRight:10 }}
         onClick={ state.deleteContact }>
@@ -36,10 +44,13 @@ const ContactView = ({ state }): JSX.Element => (
       </Button>
     }
     { state.currentView === "contact" &&
-      <Button variant="contained" color="primary" size="small" style={{ marginTop:10 }}
+      <Button variant="contained" color="primary" size="small" style={{ marginTop:10, marginRight:10 }}
       onClick={ () => state.showComposeMessage("contact") }>Send Email</Button>
     }
-
+    { state.currentView === "contact" &&
+      <Button variant="contained" color="primary" size="small" style={{ marginTop:10 }}
+      onClick={ () => state.updateContact("contact") }>Update Contact</Button>
+      }
   </form>
 
 ); /* ContactView. */
