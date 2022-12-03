@@ -166,14 +166,14 @@ app.post("/contacts",
 
 /******************************                   feature added                ******************************/
 // update a contact
-app.get('/contacts/id',
+app.put('/contacts/id',
     async (inRequest: Request, inResponse: Response) => {
     console.log("UPDATE /contacts", inRequest.body);
     try {
         const contactsWorker: Contacts.Worker = new Contacts.Worker();
         // await contactsWorker.updateContact(inRequest.params.inID, inRequest.body)
         await contactsWorker.updateContact("g8qTwzCg90sIyDFC", {   //test hardcode
-            name: 'webster', email: 'mary@gmail.com' })                //test hardcode
+            name: 'David', email: 'david@gmail.com' })                //test hardcode
 
         console.log("Contact updated");
         inResponse.status(201).send(`Contact with id: ${inRequest.params.id} updated`)

@@ -278,7 +278,7 @@ app.post("/contacts", function (inRequest, inResponse) { return __awaiter(void 0
 }); });
 /******************************                   feature added                ******************************/
 // update a contact
-app.get('/contacts/id', function (inRequest, inResponse) { return __awaiter(void 0, void 0, void 0, function () {
+app.put('/contacts/id', function (inRequest, inResponse) { return __awaiter(void 0, void 0, void 0, function () {
     var contactsWorker, inError_8;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -290,7 +290,7 @@ app.get('/contacts/id', function (inRequest, inResponse) { return __awaiter(void
                 contactsWorker = new Contacts.Worker();
                 // await contactsWorker.updateContact(inRequest.params.inID, inRequest.body)
                 return [4 /*yield*/, contactsWorker.updateContact("g8qTwzCg90sIyDFC", {
-                        name: 'webster', email: 'mary@gmail.com'
+                        name: 'David', email: 'david@gmail.com'
                     })]; //test hardcode
             case 2:
                 // await contactsWorker.updateContact(inRequest.params.inID, inRequest.body)
