@@ -1,2 +1,11 @@
-/client/
+/.idea/
 /server/dist/
+/server/serverInfo.json
+/server/tsconfig.json
+/server/package-lock.json
+/server/package.json
+/server/node_modules/
+/client/dist/
+/client/node_modules/
+
+
