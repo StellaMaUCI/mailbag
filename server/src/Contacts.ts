@@ -101,6 +101,7 @@ export class Worker {
   public updateContact(inID: string, inContact: IContact): Promise<string> {
   // public updateContact(inContact: IContact): Promise<IContact> {
     console.log("Contacts.Worker.updateContact()", inContact);
+    console.log("Contacts.Worker.updateContact()", inID);
 
     return new Promise((inResolve, inReject) => {
       this.db.update(

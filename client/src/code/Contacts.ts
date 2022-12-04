@@ -56,7 +56,7 @@ export class Worker {
 
     console.log("Contacts.Worker.updateContacts()");
 
-    const response: AxiosResponse = await axios.put(`${config.serverAddress}/contacts${inID}`, inContact);
+    const response: AxiosResponse = await axios.put(`${config.serverAddress}/contacts/${inID}`, inContact);
     return response.data;
 
   } /* End updateContacts(). */

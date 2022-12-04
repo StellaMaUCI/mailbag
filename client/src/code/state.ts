@@ -202,7 +202,7 @@ export function createState(inParentComponent: React.Component): any {
 
 
 
-      /************************************ add feature ***************************************
+      /************************************       add feature       ***************************************
        * Update a contact to the list of contacts.
        * @param inID A contact descriptor object.
        * @param inContact A contact descriptor object.
@@ -305,10 +305,13 @@ export function createState(inParentComponent: React.Component): any {
 
       }.bind(inParentComponent), /* End fieldChangeHandler(). */
 
-      /******************************     Add feature    *************************
+
+
+
+      /******************************     Add feature    ********************************
        * Update contact.
        */
-      updateContact : async function (inID, inContact: IContact): Promise<void> {
+      updateContact : async function (): Promise<void> {
         console.log("state.updateContact()", this.state.contactID, this.state.contactName, this.state.contactEmail);
 
         // Copy list.
@@ -317,15 +320,16 @@ export function createState(inParentComponent: React.Component): any {
         this.state.showHidePleaseWait(true);
         const contactsWorker: Contacts.Worker = new Contacts.Worker();
         const contact: Contacts.IContact =
-            await contactsWorker.updateContacts(this.state.contactID, inContact);
+            await contactsWorker.updateContacts(this.state.contactID, {name: this.state.contactName,email:this.state.contactEmail});
         this.state.showHidePleaseWait(false);
 
         // Update from list.
-        cl.updateContactToList(this.state.contactID, contact)
+        // cl.updateContactToList(this.state.contactID, contact)
 
         // Update state.
         this.setState(() => ({ contacts : cl, contactID : null, contactName : "", contactEmail : "" }));
       }.bind(inParentComponent), /* End updateContact(). */
+
 
 
 
