@@ -37,3 +37,12 @@ npm install --save-dev @types/mailparser
 npm install --save-dev @types/nedb  
 npm install --save-dev @types/node  
 npm install --save-dev @types/nodemailer  
+
+
+
+## Run Client
+`cd mailbag/client`  
+Open config.ts: update userEmail: your email address(The same one as in serverInfo.json)    
+`$webpack --mode production`  
+$npm install //node_modules created, but no dist，then go to next step
+$npm run build //restart Intellij, dist displayed
